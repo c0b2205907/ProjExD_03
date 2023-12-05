@@ -256,6 +256,7 @@ def main():
         #if beam.self.rct.colliderect(bomb.self.rct):
         #  beam = None
         #  bomb = None
+        
 
         # for explosion in explosions:
         #     if explosion.life > 0:
@@ -267,4 +268,6 @@ if __name__ == "__main__":
     main()
     pg.quit()
     sys.exit()
+
+
 
