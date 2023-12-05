@@ -145,20 +145,61 @@ class Beam:
         self.rct.move_ip(self.vx, self.vy)
         screen.blit(self.img, self.rct)
 
-class Explosion:
-    def __init__(self,bomb):
-        self.img = pg.image.load(f"{MAIN_DIR}/fig/explosion.png")
-        self.img.extend([pg.transform.flip(img,bool,bool) for img in self .imgs])
-        self.img = self.img[0]
-        self.rct = self.img.get.rect()
-        self.rct.center = bomb.rct.center
-        self.life = 20
+class ScoreBoard:
+    """
+    機能３：撃ち落とした爆弾の数を表示するスコアクラス
+    """
 
-    def update(self, screen):
-        self.life -= 1
-        if self.life > 0:
-            self.img = self.img(self.life//10)
-        screen.blit(self.img, self.rct) 
+    def __init__(self, all_bomb: int):
+        self.all_bomb = all_bomb  # Total number of bombs in the game
+        self.killed_bombs = 0  # Count of bombs that have been shot down
+
+    def count_score(self, active_bomb: int):
+        """
+        撃ち落とした爆弾の数を計算する
+        """
+        self.killed_bombs = self.all_bomb - active_bomb
+        return self.killed_bombs
+
+    def display_score(self, screen: pg.Surface):
+        """
+        スコアを表示する
+        """
+        # 色を定義する
+        black = (0, 0, 0)
+        white = (255, 255, 255)
+        font = pg.font.Font('freesansbold.ttf', 32)  # フォントオブジェクトを作成する
+        text = font.render(f"score:{self.killed_bombs}", True, black, white)
+        textRect = text.get_rect()
+        textRect.center = (70, 50)
+        screen.blit(text, textRect)
+
+class BombEffect:
+    """
+    機能１：爆弾撃ち落とした時の爆発エフェクトクラス
+    """
+
+    def __init__(self, bomb: Bomb, duration=3000):
+        self.bomb = bomb
+        self.img = pg.image.load(f"{MAIN_DIR}/fig/explosion.gif")
+        self.rct = self.img.get_rect()
+        self.rct.centery = bomb.rct.centery
+        self.rct.centerx = bomb.rct.centerx
+        self.duration = duration
+        self.start_time = pg.time.get_ticks()
+
+    def boom_effect(self, screen):
+        current_time = pg.time.get_ticks()
+        if current_time - self.start_time < self.duration:
+            screen.blit(self.img, self.rct)
+            return True
+        else:
+            return False
+
+
+
+
+
 
 
 def main():
@@ -213,12 +254,12 @@ def main():
         clock.tick(50)
 
         #if beam.self.rct.colliderect(bomb.self.rct):
-         #  beam = None
-          #  bomb = None
+        #  beam = None
+        #  bomb = None
 
-#        for explosion in explosions:
- #           if explosion.life > 0:
-  #              explosion.update(screen)
+        # for explosion in explosions:
+        #     if explosion.life > 0:
+        #         explosion.update(screen)
 
 
 if __name__ == "__main__":
