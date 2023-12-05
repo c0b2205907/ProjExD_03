@@ -93,8 +93,6 @@ class Bird:
         screen.blit(self.img, self.rct)
  
     def update(self, key_lst: list[bool], screen: pg.Surface):
-
-        
         """
         押下キーに応じてこうかとんを移動させる
         引数1 key_lst：押下キーの真理値リスト
