@@ -25,7 +25,6 @@ def check_bound(obj_rct: pg.Rect) -> tuple[bool, bool]:
     if obj_rct.top < 0 or HEIGHT < obj_rct.bottom:
         tate = False
     return yoko, tate
-  
 
 class Bird:
     """
